@@ -1,0 +1,16 @@
+setcompatiblemode 0x0F;
+
+disabledraw;
+begingroupundo;
+execmacro "removePageBreakLines.mac";
+endgroupundo;
+enabledraw;
+
+disabledraw;
+begingroupundo;
+execmacro "addPageBreakLines.mac";
+endgroupundo;
+enabledraw;
+
+
+

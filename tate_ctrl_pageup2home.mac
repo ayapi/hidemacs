@@ -1,0 +1,22 @@
+	setcompatiblemode 0x0F;
+	
+	#is_tate = getconfig( "Tategaki" ) & 0x00000001;
+	
+	if ( iskeydown( 0x10 ) && (!selecting) ) {
+		beginsel;
+		#need_endsel = 1;
+	}
+	if( #is_tate ){
+		#lines_per_page = getconfig( "ShowPageNo" );
+		#current_page = y / #lines_per_page;
+		#current_page_first_line = #current_page * #lines_per_page;
+		disabledraw;
+		moveto 0, #current_page_first_line;
+		execmacro "smartHome.mac";
+		enabledraw;
+	}else{
+		prevoutlineitem;
+	}
+	if ( #need_endsel ) {
+		endsel;
+	}

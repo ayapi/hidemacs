@@ -1,0 +1,13 @@
+setcompatiblemode 0x0F;
+disabledraw;
+#from = x;
+$line = gettext( 0, y, x, y, 1 );
+golinetop;
+
+loaddll "hmjre.dll";
+#n = dllfunc( "FindRegular", "[^@ \\t]", $line, 0 );
+
+if( #n >= 0 ) {
+	moveto2 column + byteindex_to_charindex( $line, #n ), lineno;
+}
+enabledraw;

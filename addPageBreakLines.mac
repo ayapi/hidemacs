@@ -1,0 +1,41 @@
+setcompatiblemode 0x0F;
+
+#lines_per_page = getconfig( "ShowPageNo" );
+if(#lines_per_page != 0){
+	#height = getconfig( "Orikaeshi" );
+	#before_scroll_column = xtocolumn( 0, screentopy );
+	#before_scroll_lineno = ytolineno( 0, screentopy );
+	#before_column = column;
+	#before_lineno = lineno;
+	#cur_y = 0;
+	disabledraw;
+	while(#cur_y < linecount){
+		moveto 0, #cur_y;
+		$line = gettext( 0, #cur_y, linelen, #cur_y, 1 );
+		#n = strstr($line, char(0x0c));
+		if(#n >= 0){
+			#extra_lines_c = #lines_per_page - #cur_y % #lines_per_page;
+			#pad_i = 0;
+			#tab_length = getconfig( "Tab" );
+			#pad_c = (#extra_lines_c * #height - #n) / #tab_length;
+			$pad_chars = "";
+			while(#pad_i < #pad_c - 1){
+				$pad_chars = $pad_chars + char(0x09);
+				#pad_i = #pad_i + 1;
+			}
+			moveto #n + 1, #cur_y;
+			insert $pad_chars;
+			#cur_y = #cur_y + #extra_lines_c + 1;
+		}else{
+			#cur_y = #cur_y + 1;
+		}
+	}
+	moveto2 #before_column, #before_lineno;
+	
+	#scroll_lineno = linenotoy(#before_scroll_column, #before_scroll_lineno);
+	$scroll_lineno_char = gettext( 0, #scroll_lineno, 1, #scroll_lineno , 1 );
+	if( $scroll_lineno_char == char(0x0c) ) {
+		#scroll_lineno = linenotoy(#before_scroll_column, #before_scroll_lineno + 1);
+	}
+	enabledraw #scroll_lineno;
+}

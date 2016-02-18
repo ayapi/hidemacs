@@ -1,0 +1,22 @@
+	setcompatiblemode 0x0F;
+	
+	#is_tate = getconfig( "Tategaki" );
+	
+	if ( iskeydown( 0x10 ) && (!selecting) ) {
+		beginsel;
+		#need_endsel = 1;
+	}
+	if( #is_tate ){
+		#lines_per_page = getconfig( "ShowPageNo" );
+		#current_page = y / #lines_per_page;
+		#current_page_last_line = (#current_page + 1) * #lines_per_page - 1;
+		disabledraw;
+		moveto 0, #current_page_last_line;
+		golineend;
+		enabledraw;
+	}else{
+		goscreenend;
+	}
+	if ( #need_endsel ) {
+		endsel;
+	}

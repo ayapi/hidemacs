@@ -1,0 +1,11 @@
+	setcompatiblemode 0x0F;
+	
+	#is_tate = getconfig( "Tategaki" ) & 0x00000001;
+	
+	if( #is_tate ){
+		#lines_per_page = getconfig( "ShowPageNo" );
+		#current_page = y / #lines_per_page;
+		#current_page_first_line = #current_page * #lines_per_page;
+		disabledraw;
+		enabledraw #current_page_first_line;
+	}

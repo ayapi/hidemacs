@@ -1,0 +1,10 @@
+setcompatiblemode 0x0F;
+disabledraw;
+begingroupundo;
+if (column != 0) {
+	insertreturn;
+}
+insert char(0x0c);
+execmacro "adjustPageBreak.mac";
+endgroupundo;
+enabledraw;

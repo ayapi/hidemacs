@@ -1,0 +1,33 @@
+setcompatiblemode 0x0F;
+$file = basename2;
+$ext = rightstr( $file, 4 );
+if($ext == ".txt" && x >= 2){
+	disabledraw;
+	$line = gettext2( 0, lineno, linelen2, lineno, 1 );
+
+	loaddll "hmjre.dll";
+	#n = dllfunc( "FindRegular", "^[\\t ]*　[「『]", $line, 0 );
+
+	if( #n >= 0 ) {
+		disableinvert;
+		#before_x = x;
+		#before_y = y;
+		selectline;
+		replacedown "^([\\t ]*)　([「『])(.*)$", "\\1\\2\\3" ,regular,inselect,nohilight
+		escape;
+		moveto #before_x - 1, #before_y;
+		enableinvert;
+//		$s = dllfuncstr( "ReplaceRegular", "(^[\\t ]*)　「", $line, 0, "\\1「" );
+//		if( return == 1 ){
+//			#need_return = 1;
+
+//		}
+//		deleteline2;
+//		insert $s;
+//		if( #need_return ) {
+//			insertreturn;
+//			moveto #before_x, #before_y;
+//		}
+	}
+	enabledraw;
+}

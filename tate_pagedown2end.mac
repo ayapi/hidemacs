@@ -1,0 +1,19 @@
+	setcompatiblemode 0x0F;
+	#is_tate = getconfig( "Tategaki" ) & 0x00000001;
+
+	if ( iskeydown( 0x10 ) && (!selecting) ) {
+		beginsel;
+		#need_endsel = 1;
+	}
+	if( #is_tate ){
+		
+		golineend;
+		if(column != linelen2){
+			moveto 0, y + 1;
+		}
+	}else{
+		nextpage;
+	}
+	if ( #need_endsel ) {
+		endsel;
+	}

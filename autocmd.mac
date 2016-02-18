@@ -1,0 +1,116 @@
+setcompatiblemode 0x0F;
+if( event == 0 ) {
+	// 自動コマンド以外
+	disabledraw;
+	begingroupundo;
+	execmacro "removePageBreakLines.mac";
+	execmacro "addPageBreakLines.mac";
+	endgroupundo;
+	enabledraw;
+} else if( event == 1 ) {
+	// ファイルを開いた直後
+	//　　geteventparam(0)の返り値
+	//　　　0 外部から開いた
+	//　　　1 秀丸エディタから開いた
+	//　　　2 常駐秀丸エディタから開いた
+	//　　　3 タグジャンプによって開いた(V8.30以降)
+	
+	disabledraw;
+	begingroupundo;
+	execmacro "addPageBreakLines.mac";
+	endgroupundo;
+	enabledraw;
+} else if( event == 2 ) {
+	// 新規作成直後
+	//　　geteventparam(0)の返り値
+	//　　　0 外部から開いた
+	//　　　1 秀丸エディタから開いた
+	//　　　2 常駐秀丸エディタから開いた
+} else if( event == 3 ) {
+	// 保存直前と直後
+	//　　geteventparam(0)の返り値
+	//　　　0 保存直前
+	//　　　1 保存直後
+	if( geteventparam(0) == 0 ){
+		disabledraw;
+		begingroupundo;
+		execmacro "removePageBreakLines.mac";
+		endgroupundo;
+		enabledraw;
+	} else if ( geteventparam(0) == 1 ){
+		disabledraw;
+		begingroupundo;
+		execmacro "addPageBreakLines.mac";
+		endgroupundo;
+		enabledraw;
+	}
+} else if( event == 4 ) {
+	// 印刷直前と直後
+	//　　geteventparam(0)の返り値
+	//　　　0 印刷直前
+	//　　　1 印刷直後
+	if( geteventparam(0) == 0 ){
+		disabledraw;
+		begingroupundo;
+		execmacro "removePageBreakLines.mac";
+		endgroupundo;
+		enabledraw;
+	} else if ( geteventparam(0) == 1 ){
+		disabledraw;
+		begingroupundo;
+		execmacro "addPageBreakLines.mac";
+		endgroupundo;
+		enabledraw;
+	}
+} else if( event == 5 ) {
+	// 編集後タイマー
+	//　　geteventparam(0)の返り値
+	//　　　0 通常の編集 
+	//　　　1 やり直しによる編集
+	//　　geteventparam(1)の返り値
+	//　　　0 改行以外の編集 
+	//　　　1 改行による編集（遅延時間0msのときのみ）
+	//　　geteventparam(2)の返り値（V8.00以降）
+	//　　　0 単語補完の決定直後以外 
+	//　　　1 単語補完の決定直後
+	//　　geteventparam(3)の返り値（V8.00以降）
+	//　　　遅延時間(ms)
+	//　　geteventparam(4)の返り値（V8.00以降）
+	//　　　遅延時間0msのとき、入力された一文字の文字コード。（ASCII文字限定）
+	//　　geteventparam(5)の返り値（V8.33以降）
+	//　　　0 削除ではない編集
+	//　　　1 通常の削除
+	//　　　2 BackSpace
+	//　　　3 範囲選択
+	//　　　4 行削除
+	//　　　5 単語削除
+	//　　　6 カーソルより後ろを削除
+	//　　　7 カーソルより前を削除
+	//　　　8 置換
+	if ( geteventparam(0) == 0 && geteventparam(5) == 0 ){
+		begingroupundo;
+		execmacro "adjustFirstKagi.mac";
+		endgroupundo;
+	}
+} else if( event == 5 ) {
+	// カーソル移動後タイマー
+	//　　geteventparam(3)の返り値（V8.00以降）
+	//　　　遅延時間(ms)
+	//　　geteventparam(4)の返り値（V8.20以降）
+	//　　　どういうコマンドによってカーソル移動したかを表すコマンド値。
+	//　　　通常の矢印キーによりカーソル移動は0になります。
+	//　　　コマンド値を調べるするマクロの例：（ステータスバーに表示）
+	//　　　　title str(geteventparam(4)),1;
+	//　　　　title -1,1;
+} else if( event == 5 ) {
+	// ファイルを閉じる直前
+} else if( event == 5 ) {
+	// アクティブ切り替え後
+	//　　geteventparam(0)の返り値
+	//　　　0 タグジャンプによって開いた以外(V8.30以降)
+	//　　　3 タグジャンプによって開いた(V8.30以降)
+	//　　geteventparam(3)の返り値（V8.00以降）
+	//　　　遅延時間(ms)
+}
+endmacro;
+
