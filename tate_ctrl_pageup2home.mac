@@ -12,6 +12,7 @@
 		#dest_line = #current_page * #lines_per_page;
 		disabledraw;
 		moveto 0, #dest_line;
+		golineend3;
 		execmacro "smartHome.mac";
 		enabledraw;
 	}else{
