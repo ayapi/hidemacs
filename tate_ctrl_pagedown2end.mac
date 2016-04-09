@@ -12,10 +12,7 @@
 		#current_page_last_line = (#current_page + 1) * #lines_per_page - 1;
 		disabledraw;
 		moveto 0, #current_page_last_line;
-		golineend;
-		if(column != linelen2){
-			moveto 0, y + 1;
-		}
+		golineend3;
 		enabledraw;
 	}else{
 		goscreenend;
